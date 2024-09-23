@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
 
-const ADMIN_JWT_SECRET= ""
+const ADMIN_JWT_SECRET= "IAMTHEADMIN"
 
 function adminMiddleware(req,res,next){
     const token = req.headers.token;
-    const adminId = jwt.verify(token,ADMIN_JWT_SECRET);
+    const decodedMessage = jwt.verify(token,ADMIN_JWT_SECRET);
 
-    if(adminId){
-        req.adminId = adminId;
+    if(decodedMessage){
+        req.adminId = decodedMessage.adminId;
         next();
 
     } else {
