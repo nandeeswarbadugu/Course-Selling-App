@@ -1,3 +1,5 @@
+require('dotenv').config()
+console.log(process.env.MONGO_URL);
 const express = require('express');
 const app =express();
 const {userRouter} = require("./routes/user")
@@ -11,7 +13,7 @@ app.use("/api/v1/admin",adminRouter);
 
 
 async function dbConnect(){
-    await mongoose.connect("mongodb+srv://nandeeswar7421:z2PImVuyH2iL51bZ@cluster0.odvpz.mongodb.net/coursera-database");
+    await mongoose.connect(process.env.MONGO_URL);
     app.listen(3000);
 }
 

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const USER_JWT_SECRET = "s3cret";
+require('dotenv').config();
 
 function userMiddleware(req,res,next){
     const token = req.body.token;
-    const decodedMessage = jwt.verify(token,USER_JWT_SECRET);
+    const decodedMessage = jwt.verify(token,process.env.USER_JWT_SECRET);
 
     if (decodedMessage){
         req.userId = decodedMessage.userId;
@@ -18,7 +18,6 @@ function userMiddleware(req,res,next){
 }
 
 module.exports = {
-    userMiddleware,
-    USER_JWT_SECRET
+    userMiddleware
 }
 

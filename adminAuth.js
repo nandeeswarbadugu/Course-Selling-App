@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
-
-const ADMIN_JWT_SECRET= "IAMTHEADMIN"
+require('dotenv').config();
 
 function adminMiddleware(req,res,next){
     const token = req.headers.token;
-    const decodedMessage = jwt.verify(token,ADMIN_JWT_SECRET);
+    const decodedMessage = jwt.verify(token,process.env.ADMIN_JWT_SECRET);
 
     if(decodedMessage){
         req.adminId = decodedMessage.adminId;
@@ -19,7 +18,7 @@ function adminMiddleware(req,res,next){
 }
 
 module.exports = {
-    adminMiddleware,
-    ADMIN_JWT_SECRET
+    adminMiddleware
 }
+
 

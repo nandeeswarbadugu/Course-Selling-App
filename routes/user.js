@@ -1,8 +1,9 @@
+require('dotenv').config();
 const { Router,json } = require("express");
 const userRouter = Router();
 const {UserModel} = require("../db");
 const jwt = require("jsonwebtoken")
-const {userMiddleware,USER_JWT_SECRET} = require("../userAuth")
+const {userMiddleware} = require("../userAuth")
 const bcrypt = require("bcrypt");
 const { hasSubscribers } = require("diagnostics_channel");
 
@@ -45,8 +46,8 @@ userRouter.post("/signin", function(req,res){
     if(verifyUser)
     {
         const token = jwt.sign({
-            id:user._id
-        },USER_JWT_SECRET);
+            userid:user._id
+        },process.env.USER_JWT_SECRET);
 
         res.json({token:token});
     }
