@@ -31,10 +31,10 @@ userRouter.post("/signup", async function(req,res){
 
 })
 
-userRouter.post("/signin", function(req,res){
+userRouter.post("/signin", async function(req,res){
     const {email,password} = req.body;
 
-    const user = UserModel.findOne({
+    const user = await UserModel.findOne({
         email:email
     })
 
@@ -42,7 +42,7 @@ userRouter.post("/signin", function(req,res){
     {
         res.json({message:"User does not exist"});
     }
-    const verifyUser = bcrypt.compare(password,user.password);
+    const verifyUser =await bcrypt.compare(password,user.password);
     if(verifyUser)
     {
         const token = jwt.sign({
@@ -57,7 +57,6 @@ userRouter.post("/signin", function(req,res){
 
     }
 });
-
 
 userRouter.get("/purchases",userMiddleware, function(req,res){
 
